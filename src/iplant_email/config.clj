@@ -1,25 +1,36 @@
 (ns iplant-email.config
+  (:use [slingshot.slingshot :only [throw+]])
   (:require [clojure-commons.props :as props]
             [clojure-commons.config :as cc]
+            [clojure-commons.error-codes :as ce]
             [clojure.tools.logging :as log]))
 
-(def config (ref nil))
+(def ^:private props (ref nil))
+(def ^:private config-valid (ref true))
+(def ^:private configs (ref []))
 
-(def listen-port
-  (memoize
-   (fn []
-    (Integer/parseInt (get @config "iplant-email.app.listen-port")))))
+(cc/defprop-optint listen-port
+  "The port to listen to for incoming connections."
+  [props config-valid configs]
+  "iplant-email.app.listen-port" 60000)
 
-(def smtp-host
-  (memoize
-   (fn []
-    (get @config "iplant-email.smtp.host"))))
+(cc/defprop-optstr smtp-host
+  "The host to connect to when sending messages via SMTP."
+  [props config-valid configs]
+  "iplant-email.smtp.host" "local-exim")
 
-(def smtp-from-addr
-  (memoize
-   (fn []
-     (get @config "iplant-email.smtp.from-address"))))
+(cc/defprop-str smtp-from-addr
+  "The address to send messages from."
+  [props config-valid configs]
+  "iplant-email.smtp.from-address")
+
+(defn- validate-config
+  []
+  (when-not (cc/validate-config configs config-valid)
+    (throw+ {:error_code ce/ERR_CONFIG_INVALID})))
 
 (defn load-config-from-file
   [cfg-path]
-  (cc/load-config-from-file cfg-path config))
+  (cc/load-config-from-file cfg-path props)
+  (cc/log-config props)
+  (validate-config))
