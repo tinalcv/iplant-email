@@ -27,7 +27,12 @@
                  [org.bituf/clj-stringtemplate "0.2"]
                  [org.iplantc/common-cli "5.2.8.0"]
                  [compojure "1.5.0"]
-                 [me.raynes/fs "1.4.6"]]
-  :plugins [[test2junit "1.1.3"]]
+                 [me.raynes/fs "1.4.6"]
+                 [slingshot "0.12.2"]]
+  :eastwood {:exclude-namespaces [:test-paths]
+             :linters [:wrong-arity :wrong-ns-form :wrong-pre-post :wrong-tag :misplaced-docstrings]}
+  :plugins [[jonase/eastwood "0.2.3"]
+            [test2junit "1.1.3"]]
+  :profiles {:dev {:resource-paths ["dev-resources"]}}
   :aot [iplant-email.core]
   :main iplant-email.core)
