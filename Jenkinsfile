@@ -1,3 +1,4 @@
+#!groovy
 def repo = "iplant-email"
 def dockerUser = "discoenv"
 
