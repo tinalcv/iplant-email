@@ -28,11 +28,13 @@
                  [org.cyverse/common-cli "2.8.0"]
                  [compojure "1.5.0"]
                  [me.raynes/fs "1.4.6"]
-                 [slingshot "0.12.2"]]
+                 [slingshot "0.12.2"]
+                 [com.novemberain/langohr "3.5.1"]
+                 [org.cyverse/event-messages "0.0.1"]]
   :eastwood {:exclude-namespaces [:test-paths]
              :linters [:wrong-arity :wrong-ns-form :wrong-pre-post :wrong-tag :misplaced-docstrings]}
   :plugins [[jonase/eastwood "0.2.3"]
             [test2junit "1.1.3"]]
-  :profiles {:dev {:resource-paths ["dev-resources"]}}
-  :aot [iplant-email.core]
+  :profiles {:dev {:resource-paths ["dev-resources"]}
+             :uberjar {:aot :all}}
   :main iplant-email.core)
