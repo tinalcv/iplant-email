@@ -11,6 +11,8 @@
             [iplant-email.json-body :as jb]
             [iplant-email.json-validator :as jv]
             [iplant-email.templatize :as tmpl]
+            [iplant-email.amqp :as amqp]
+            [iplant-email.events :as events]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [common-cli.core :as ccli]
@@ -39,6 +41,14 @@
 
 
   (POST "/" {body :body} (sm/do-send-email body)))
+
+
+(defn listen-for-events
+  []
+  (let [exchange-cfg (events/exchange-config)
+        queue-cfg    (events/queue-config)]
+    (amqp/connect exchange-cfg queue-cfg {"events.iplant-email.ping" events/ping-handler})))
+
 
 (defn cli-options
   []
@@ -69,5 +79,6 @@
       (when-not (fs/readable? (:config options))
         (ccli/exit 1 "The config file is not readable."))
       (cfg/load-config-from-file (:config options))
+      (.start (Thread. listen-for-events))
       (require 'ring.adapter.jetty)
       ((eval 'ring.adapter.jetty/run-jetty) (site-handler email-routes) {:port (cfg/listen-port)}))))

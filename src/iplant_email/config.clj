@@ -24,6 +24,41 @@
   [props config-valid configs]
   "iplant-email.smtp.from-address")
 
+(cc/defprop-optstr amqp-uri
+  "The URI to use for AMQP connections."
+  [props config-valid configs]
+  "iplant-email.amqp.uri" "amqp://guest:guest@rabbit:5672/")
+
+(cc/defprop-optstr exchange-name
+  "The name of the exchange to connect to on the AMQP broker."
+  [props config-valid configs]
+  "iplant-email.amqp.exchange.name" "de")
+
+(cc/defprop-optboolean exchange-durable?
+  "Whether or not the exchange is durable."
+  [props config-valid configs]
+  "iplant-email.amqp.exchange.durable" true)
+
+(cc/defprop-optboolean exchange-auto-delete?
+  "Wether or not the exchange is automatically deleted."
+  [props config-valid configs]
+  "iplant-email.amqp.exchange.auto-delete" false)
+
+(cc/defprop-optstr queue-name
+  "The name of the queue to connect to on the exchange."
+  [props config-valid configs]
+  "iplant-email.amqp.queue.name" "events.iplant-email.queue")
+
+(cc/defprop-optboolean queue-durable?
+  "Whether or not the queue is durable."
+  [props config-valid configs]
+  "iplant-email.amqp.queue.durable" true)
+
+(cc/defprop-optboolean queue-auto-delete?
+  "Whether or not the queue is automatically deleted."
+  [props config-valid configs]
+  "iplant-email.amqp.queue.auto-delete" false)
+
 (defn- validate-config
   []
   (when-not (cc/validate-config configs config-valid)
