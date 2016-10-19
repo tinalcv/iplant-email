@@ -1,0 +1,5 @@
+{{- with $base := (printf "configs/%s" (env "DE_ENV")) -}}
+{{ with $v := (key (printf "%s/smtp/host" $base)) }}iplant-email.smtp.host = {{ $v }}{{ end }}
+{{ with $v := (key (printf "%s/smtp/from-address" $base)) }}iplant-email.smtp.from-address = {{ $v }}{{ end }}
+{{ with $v := (key (printf "%s/amqp/uri" $base)) }}iplant-email.amqp.uri = {{ $v }}{{ end }}
+{{- end -}}

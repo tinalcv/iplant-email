@@ -1,11 +1,10 @@
-FROM clojure:alpine
+FROM discoenv/clojure-base:master
 
-RUN apk add --update git && \
-    rm -rf /var/cache/apk
+ENV CONF_TEMPLATE=/usr/src/app/iplant-email.properties.tmpl
+ENV CONF_FILENAME=iplant-email.properties
+ENV PROGRAM=iplant-email
 
 VOLUME ["/etc/iplant/de"]
-
-WORKDIR /usr/src/app
 
 COPY project.clj /usr/src/app/
 RUN lein deps
@@ -19,8 +18,7 @@ RUN lein uberjar && \
 
 RUN ln -s "/usr/bin/java" "/bin/iplant-email"
 
-ENTRYPOINT ["iplant-email", "-Dlogback.configurationFile=/etc/iplant/de/logging/iplant-email-logging.xml", "-cp", ".:iplant-email-standalone.jar", "iplant_email.core"]
-CMD ["--help"]
+ENTRYPOINT ["run-service", "-Dlogback.configurationFile=/etc/iplant/de/logging/iplant-email-logging.xml", "-cp", ".:iplant-email-standalone.jar", "iplant_email.core"]
 
 ARG git_commit=unknown
 ARG version=unknown
