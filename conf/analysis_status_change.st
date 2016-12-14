@@ -1,6 +1,6 @@
 The status of $analysisname$ has changed to $analysisstatus$.
 
-Description:
+Comments:
 $analysisdescription$
 
 Start Date: $analysisstartdate$
