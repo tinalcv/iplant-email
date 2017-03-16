@@ -25,7 +25,7 @@
                                 [com.fasterxml.jackson.core/jackson-core]]]
                  [javax.mail/mail "1.4"]
                  [org.bituf/clj-stringtemplate "0.2"]
-                 [org.cyverse/common-cli "2.8.0"]
+                 [org.cyverse/common-cli "2.8.1"]
                  [compojure "1.5.0"]
                  [me.raynes/fs "1.4.6"]
                  [slingshot "0.12.2"]
