@@ -7,7 +7,7 @@
       (string/trim (:out (sh "git" "rev-parse" "HEAD")))
       ""))
 
-(defproject org.cyverse/iplant-email "2.8.1-SNAPSHOT"
+(defproject org.cyverse/iplant-email "2.8.2-SNAPSHOT"
   :description "iPlant Email Service"
   :url "https://github.com/iPlantCollaborativeOpenSource/DE"
   :license {:name "BSD"
