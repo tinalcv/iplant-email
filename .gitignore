@@ -5,6 +5,7 @@ classes
 *~
 bin
 .classpath
+.eastwood
 .project
 .lein*
 \#*\#

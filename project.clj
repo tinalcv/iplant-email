@@ -14,26 +14,27 @@
             :url "http://iplantcollaborative.org/sites/default/files/iPLANT-LICENSE.txt"}
   :manifest {"Git-Ref" ~(git-ref)}
   :uberjar-name "iplant-email-standalone.jar"
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.cyverse/clojure-commons "2.8.0"]
-                 [org.cyverse/service-logging "2.8.0"]
-                 [cheshire "5.5.0"
+  :dependencies [[org.clojure/clojure "1.10.0"]
+                 [org.cyverse/clojure-commons "3.0.3"]
+                 [org.cyverse/service-logging "2.8.1"]
+                 [cheshire "5.8.1"
                    :exclusions [[com.fasterxml.jackson.dataformat/jackson-dataformat-cbor]
                                 [com.fasterxml.jackson.dataformat/jackson-dataformat-smile]
                                 [com.fasterxml.jackson.core/jackson-annotations]
                                 [com.fasterxml.jackson.core/jackson-databind]
                                 [com.fasterxml.jackson.core/jackson-core]]]
-                 [javax.mail/mail "1.4"]
+                 [javax.mail/mail "1.4.7"]
                  [org.bituf/clj-stringtemplate "0.2"]
                  [org.cyverse/common-cli "2.8.1"]
-                 [compojure "1.5.0"]
+                 [compojure "1.6.1"]
+                 [ring/ring-jetty-adapter "1.6.3"]
                  [me.raynes/fs "1.4.6"]
                  [slingshot "0.12.2"]
                  [com.novemberain/langohr "3.5.1"]
                  [org.cyverse/event-messages "0.0.1"]]
   :eastwood {:exclude-namespaces [:test-paths]
              :linters [:wrong-arity :wrong-ns-form :wrong-pre-post :wrong-tag :misplaced-docstrings]}
-  :plugins [[jonase/eastwood "0.2.3"]
+  :plugins [[jonase/eastwood "0.3.5"]
             [test2junit "1.1.3"]]
   :profiles {:dev {:resource-paths ["dev-resources"]}
              :uberjar {:aot :all}}
