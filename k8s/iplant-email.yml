@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iplant-email
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      de-app: iplant-email
+  template:
+    metadata:
+      labels:
+        de-app: iplant-email
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: de-app
+                operator: In
+                values:
+                - iplant-email
+            topologyKey: kubernetes.io/hostname
+      volumes:
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+        - name: timezone
+          configMap:
+            name: timezone
+            items:
+              - key: timezone
+                path: timezone
+        - name: service-configs
+          secret:
+            secretName: service-configs
+            items:
+              - key: iplant-email.properties
+                path: iplant-email.properties
+      containers:
+      - name: iplant-email
+        image: "discoenv/iplant-email"
+        volumeMounts:
+          - name: localtime
+            mountPath: /etc/localtime
+            readOnly: true
+          - name: timezone
+            mountPath: /etc/timezone
+            subPath: timezone
+          - name: service-configs
+            mountPath: /etc/iplant/de
+            readOnly: true
+        resources:
+          requests:
+            cpu: "160m"
+            memory: "512Mi"
+          limits:
+            cpu: "800m"
+            memory: "2Gi"
+        args:
+          - --config
+          - /etc/iplant/de/iplant-email.properties
+        env:
+          - name: SERVICE_CHECK_HTTP
+            value: "/?expecting=iplant-email"
+          - name: SERVICE_CHECK_INTERNAL
+            value: 10s
+          - name: JAVA_TOOL_OPTIONS
+            valueFrom:
+              configMapKeyRef:
+                name: java-tool-options
+                key: low
+        ports:
+          - name: listen-port
+            containerPort: 60000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 60000
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 60000
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          timeoutSeconds: 10
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iplant-email
+spec:
+  selector:
+    de-app: iplant-email
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: "listen-port"
