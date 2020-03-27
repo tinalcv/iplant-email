@@ -1,6 +1,6 @@
 Your request has been denied.
 
-Reason for denial: $denial_reason$
+Reason for denial: $update_message$
 
 Request Details:
 
