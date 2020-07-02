@@ -8,6 +8,7 @@ bin
 .eastwood
 .project
 .lein*
+.nrepl-port
 \#*\#
 /target/
 /.settings
