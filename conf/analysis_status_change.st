@@ -1,7 +1,7 @@
-The status of $analysisname$ is $analysisstatus$.
+The status of your analysis: $analysisname$ is: $analysisstatus$.
 
 Comments:
 $analysisdescription$
 
-Start Date: $analysisstartdate$
-Results Folder: $analysisresultsfolder$
+Analysis launched on: $analysisstartdate$
+Analysis results in this folder: $analysisresultsfolder$
