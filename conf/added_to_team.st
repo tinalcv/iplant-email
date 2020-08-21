@@ -1,1 +1,1 @@
-You have been added to team "$team_name$".
+You have been added to this team "$team_name$".
