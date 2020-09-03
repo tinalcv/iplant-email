@@ -3,5 +3,5 @@ The status of $analysisname$ is $analysisstatus$.
 Comments:
 $analysisdescription$
 
-Start Date: $analysisstartdate$
-Results Folder: $analysisresultsfolder$
+Analysis launch date: $analysisstartdate$
+Results folder: $analysisresultsfolder$
