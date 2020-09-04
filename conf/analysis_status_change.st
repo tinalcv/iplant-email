@@ -1,4 +1,4 @@
-The status of $analysisname$ is $analysisstatus$.
+The status of $analysisname$ is now $analysisstatus$.
 
 Comments:
 $analysisdescription$
