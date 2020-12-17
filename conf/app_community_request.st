@@ -1,5 +1,5 @@
 The app "$app_name$", by $app_integrator$, has been made public.
-The app publisher is requesting this app be shared with the following communities:
+The app publisher is requesting this app be tagged with the following communities:
 
 $community_list$
 
